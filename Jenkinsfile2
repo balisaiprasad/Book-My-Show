@@ -102,7 +102,7 @@ pipeline {
                     aws sts get-caller-identity
 
                     echo "Configuring kubectl for EKS cluster..."
-                    aws eks update-kubeconfig --name bali-eks --region us=east-1
+                    aws eks update-kubeconfig --name bali-eks --region us-east-1
 
                     echo "Verifying kubeconfig..."
                     kubectl config view
