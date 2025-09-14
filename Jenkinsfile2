@@ -84,10 +84,10 @@ pipeline {
                     withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
                         sh ''' 
                         echo "Building Docker image..."
-                        docker build --no-cache -t balisaiprasad -f bookmyshow-app/Dockerfile bookmyshow-app
+                        docker build --no-cache -t balisaiprasad/bms:latest -f bookmyshow-app/Dockerfile bookmyshow-app
 
                         echo "Pushing Docker image to Docker Hub..."
-                        docker push $DOCKER_IMAGE
+                        docker push balisaiprasad/bms:latest
                         '''
                     }
                 }
@@ -102,7 +102,7 @@ pipeline {
                     aws sts get-caller-identity
 
                     echo "Configuring kubectl for EKS cluster..."
-                    aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+                    aws eks update-kubeconfig --name bali-eks --region us=east-1
 
                     echo "Verifying kubeconfig..."
                     kubectl config view
@@ -127,7 +127,7 @@ pipeline {
                 body: "Project: ${env.JOB_NAME}<br/>" +
                       "Build Number: ${env.BUILD_NUMBER}<br/>" +
                       "URL: ${env.BUILD_URL}<br/>",
-                to: 'kastrokiran@gmail.com',
+                to: 'balisaiprasad@gmail.com',
                 attachmentsPattern: 'trivyfs.txt'
         }
     }
